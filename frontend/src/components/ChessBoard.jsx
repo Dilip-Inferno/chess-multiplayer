@@ -12,13 +12,11 @@ const ChessBoard = ({ board, socket, onPieceMove, party, errorMessage }) => {
           payload: { move: { from, to } },
         })
       );
-
       onPieceMove({ from, to });
-
       setFrom(null);
       setTo(null);
     }
-  }, [from, to]);
+  }, [from, to, onPieceMove, socket]);
 
   const handleSquares = (convertedSq) => {
     if (!from) {
@@ -28,103 +26,60 @@ const ChessBoard = ({ board, socket, onPieceMove, party, errorMessage }) => {
     }
   };
 
-  // Flip board for black player
   const flippedBoard = party === "black" ? [...board].reverse() : board;
-  const alphabet =
-    party === "black"
-      ? ["H", "G", "F", "E", "D", "C", "B", "A"]
-      : ["A", "B", "C", "D", "E", "F", "G", "H"];
-  const numbers =
-    party === "black" ? [1, 2, 3, 4, 5, 6, 7, 8] : [8, 7, 6, 5, 4, 3, 2, 1];
 
   return (
-    <div className="text-white">
-      {/* Top Alphabet Row (Fixed Alignment) */}
-      <div className="flex">
-        <div className="w-8 h-8" /> {/* Empty space for correct alignment */}
-        {alphabet.map((letter, index) => (
-          <div
-            key={index}
-            className="w-20 h-8 flex justify-center items-center text-white font-bold"
-          >
-            {letter}
-          </div>
-        ))}
-        <div className="w-8 h-8" /> {/* Empty space for right alignment */}
-      </div>
+    <div className="backdrop-blur-md bg-white rounded-lg border border-gray-200 shadow-lg p-2">
+      <div className="flex flex-col items-center sm:items-start text-white w-full border-3 border-purple-900">
+        {/* Chessboard */}
+        <div className="w-full max-w-fit">
+          {flippedBoard.map((row, i) => {
+            const displayRow = party === "black" ? [...row].reverse() : row;
 
-      {/* Chessboard Rows */}
-      {flippedBoard.map((row, i) => {
-        return (
-          <div key={i} className="flex">
-            {/* Left Row Number */}
-            <div className="w-8 h-20 flex justify-center items-center text-white font-bold">
-              {numbers[i]}
-            </div>
+            return (
+              <div key={i} className="flex w-full">
+                {displayRow.map((square, j) => {
+                  const realI = party === "black" ? 7 - i : i;
+                  const realJ = party === "black" ? 7 - j : j;
 
-            {/* Chess Squares */}
-            {(party === "black" ? [...row].reverse() : row).map((square, j) => {
-              const realI = party === "black" ? numbers.length - 1 - i : i;
-              const realJ = party === "black" ? numbers.length - 1 - j : j;
+                  const convertedSquare =
+                    String.fromCharCode(97 + realJ) + (8 - realI);
+                  const isLight = (realI + realJ) % 2 === 0;
 
-              const convertedSquare =
-                String.fromCharCode(97 + (realJ % 8)) + (8 - realI); // Correct coordinate notation
-
-              return (
-                <div
-                  onClick={() => handleSquares(convertedSquare)}
-                  key={j}
-                  className={`w-20 h-20 ${
-                    (realI + realJ) % 2 === 0 ? "bg-blue-900" : "bg-blue-200"
-                  }`}
-                >
-                  <div className="w-full justify-center flex h-full">
-                    <div className="h-full justify-center flex flex-col text-black">
-                      {square ? (
+                  return (
+                    <div
+                      key={j}
+                      onClick={() => handleSquares(convertedSquare)}
+                      className={`w-[12.5%] aspect-square flex items-center justify-center cursor-pointer
+                        ${isLight ? "bg-fuchsia-100/70" : "bg-violet-950/70"}
+                        hover:opacity-80 transition-opacity duration-200`}
+                    >
+                      {square && (
                         <img
-                          className="w-max h-full"
                           src={`/${
-                            square?.color === "b"
-                              ? `black-${square?.type}`
-                              : `white-${square?.type}`
+                            square.color === "b"
+                              ? `black-${square.type}`
+                              : `white-${square.type}`
                           }.svg`}
+                          alt={square.type}
+                          className="h-full max-h-full p-1"
                         />
-                      ) : null}
+                      )}
                     </div>
-                  </div>
-                </div>
-              );
-            })}
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
 
-            {/* Right Row Number */}
-            <div className="w-8 h-20 flex justify-center items-center text-white font-bold">
-              {numbers[i]}
-            </div>
-          </div>
-        );
-      })}
-
-      {/* Bottom Alphabet Row (Fixed Alignment) */}
-      <div className="flex">
-        <div className="w-8 h-8" /> {/* Empty space for correct alignment */}
-        {alphabet.map((letter, index) => (
-          <div
-            key={index}
-            className="w-20 h-8 flex justify-center items-center text-white font-bold"
-          >
-            {letter}
-          </div>
-        ))}
-        <div className="w-8 h-8" /> {/* Empty space for right alignment */}
-      </div>
-
-      {errorMessage && (
-        <div className="flex bg-white text-center">
-          <div className="w-full text-3xl text-red-700 border-2">
+        {/* Error Message */}
+        {errorMessage && (
+          <div className="mt-4 bg-red-600/80 text-white w-full text-center text-sm sm:text-base border border-red-700 rounded shadow-md p-3 backdrop-blur-sm ">
             {errorMessage}
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

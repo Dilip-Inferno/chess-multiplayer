@@ -1,42 +1,51 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "./Button";
+
 const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex justify-center">
-      <div className="pt-8 max-w-screen-lg">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <div className="flex justify-center">
-            <img src={"/chess.png"} className="max-w-96" />
+    <div className="flex justify-center bg-blue-900 min-h-screen py-8">
+      <div className="pt-8 max-w-screen-lg w-full px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8 backdrop-blur-md bg-sky-100/10 rounded-lg border border-blue-500/20 shadow-xl p-6 sm:p-8">
+          {/* Left Section: Image */}
+          <div className="flex justify-center md:justify-start w-full">
+            <img
+              src={"/chess.png"}
+              className="w-full rounded-lg shadow-md"
+              alt="Chess Illustration"
+            />
           </div>
-          <div className="pt-16">
-            <div className="flex justify-center">
-              <h1 className="text-4xl font-bold text-white">
-                Play Chess Online on this Platfrom
+
+          {/* Right Section: Content */}
+          <div className="flex flex-col items-center md:items-start">
+            {/* Heading and Description */}
+            <div className="mb-6">
+              <h1 className="text-3xl sm:text-4xl font-bold text-white text-center md:text-left mb-4">
+                Strategize and Conquer Online
               </h1>
+              <p className="text-lg text-gray-200 text-center md:text-left">
+                Dive into the world of online chess with our sleek and intuitive
+                platform. Challenge friends or compete with players globally in
+                thrilling matches. Sharpen your tactical skills and rise through
+                the ranks in a visually captivating environment.
+              </p>
             </div>
 
-            <div className="mt-4 flex flex-col gap-3.5 justify-center">
-              <div className="pt-3">
-                <Button
-                  onClick={() => {
-                    navigate("/game");
-                  }}
-                >
-                  Play Online
-                </Button>
-              </div>
-              <div>
-                <Button
-                  onClick={() => {
-                    navigate("/register");
-                  }}
-                >
-                  Register
-                </Button>
-              </div>
+            {/* Buttons */}
+            <div className="flex gap-4 w-full justify-center md:justify-start">
+              <button
+                onClick={() => navigate("/game")}
+                className="text-base sm:text-lg px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-red-400"
+              >
+                Play Online
+              </button>
+              <button
+                onClick={() => navigate("/register")}
+                className="text-base sm:text-lg px-6 py-3 bg-blue-700 hover:bg-blue-800 text-white rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                Register
+              </button>
             </div>
           </div>
         </div>

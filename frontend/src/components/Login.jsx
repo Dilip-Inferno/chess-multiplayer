@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Button from "./Button";
 
 const Login = ({
   handleGamePlay,
@@ -17,61 +16,73 @@ const Login = ({
   };
 
   return (
-    <>
-      <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg w-80 mt-4">
-        <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-          {!loginStatus ? (
+    <div className="w-full max-w-md px-6 py-8 rounded-lg shadow-xl backdrop-blur-md bg-white/20 border border-white/30 flex flex-col items-stretch">
+      <h2 className="text-2xl font-bold text-white mb-6 text-center">
+        {!loginStatus ? "Log In" : "Game Options"}
+      </h2>
+      <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+        {!loginStatus && (
+          <>
             <div>
-              <div>
-                <label className="block text-sm font-medium">Username</label>
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="w-full p-2 mt-1 bg-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium">Password</label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full p-2 mt-1 bg-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
+              <label
+                htmlFor="username"
+                className="block text-lg font-semibold text-white mb-2"
+              >
+                Username
+              </label>
+              <input
+                type="text"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full px-4 py-3 text-lg text-white bg-white/10 rounded-md border border-white/20 focus:outline-none focus:ring-2 focus:ring-pink-400 backdrop-blur-sm"
+                required
+              />
             </div>
-          ) : null}
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-lg font-semibold text-white mb-2"
+              >
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-4 py-3 text-lg text-white bg-white/10 rounded-md border border-white/20 focus:outline-none focus:ring-2 focus:ring-pink-400 backdrop-blur-sm"
+                required
+              />
+            </div>
+          </>
+        )}
 
-          {loginStatus ? (
-            <Button onClick={handleGamePlay} className="text-lg px-6 py-3">
-              Play Now
-            </Button>
-          ) : (
-            <Button className="text-lg px-6 py-3">Login</Button>
-          )}
-          {loginMessage && (
-            <div className="w-full p-2 mt-1 bg-gray-700 rounded">
-              {loginMessage}
-            </div>
-          )}
-          {userLogged && !loginMessage && (
-            <div className="w-full p-2 mt-1 bg-gray-700 rounded">
-              {`${userLogged} logged in`}
-            </div>
-          )}
-        </form>
-      </div>
-      <div className="bg-gradient-to-r from-slate-600 to-slate-900 text-white p-6 rounded-2xl shadow-xl w-80 mt-4 border border-white/20">
-        <h3 className="text-lg font-semibold mb-2">Sample Test Credentials</h3>
-        <p className="text-sm">
-          <span className="font-medium">Username:</span> test1, test2 <br />
-          <span className="font-medium">Password:</span> 12345678
-        </p>
-      </div>
-    </>
+        <button
+          type="submit"
+          onClick={!loginStatus ? null : handleGamePlay}
+          className={`w-full text-base sm:text-lg px-6 py-3 rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-pink-400 ${
+            loginStatus
+              ? "bg-pink-500 hover:bg-pink-600 text-white font-semibold"
+              : "bg-white text-purple-800 font-bold hover:bg-gray-100"
+          }`}
+        >
+          {loginStatus ? "Start Game" : "Log In"}
+        </button>
+
+        {loginMessage && (
+          <div className="text-center mt-4 text-md text-red-400 font-semibold">
+            {loginMessage}
+          </div>
+        )}
+
+        {loginStatus && (
+          <div className="text-center mt-4 text-md text-green-400 font-semibold">
+            Welcome {userLogged}!
+          </div>
+        )}
+      </form>
+    </div>
   );
 };
 
