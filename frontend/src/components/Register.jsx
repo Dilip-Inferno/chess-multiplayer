@@ -16,6 +16,10 @@ const Register = () => {
         <div className="text-xl font-semibold text-white">
           Registrations will open soon!
         </div>
+        <br />
+        <div className="text-xl font-semibold text-white">
+          Until then use test1, test2 and 12345678 as password
+        </div>
       </div>
     </div>
   );
