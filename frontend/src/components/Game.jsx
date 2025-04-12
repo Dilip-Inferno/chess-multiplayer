@@ -121,8 +121,8 @@ const Game = () => {
   return (
     <div className="bg-purple-900 min-h-screen py-8 flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
       <div className="max-w-screen-lg w-full flex flex-col justify-start items-center gap-8">
-        <h1 className="text-4xl font-bold kumar-one-outline-regular text-white mb-6 backdrop-blur-sm rounded-t-3xl bg-white/10 py-2 px-6 border border-white/20 shadow-md">
-          THE NEW ERA
+        <h1 className="text-4xl font-bold text-white mb-6 backdrop-blur-sm rounded-t-3xl bg-white/10 py-2 px-6 border border-white/20 shadow-md">
+          Chess - New Era
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-6 gap-6 w-full">
           {/* Chess Board */}
@@ -135,11 +135,11 @@ const Game = () => {
               party={party}
               errorMessage={errorMessage}
             />
-            {errorMessage && (
+            {/* {errorMessage && (
               <div className="mt-4 bg-red-600 text-white text-sm sm:text-base border-2 border-red-700 p-3 rounded shadow-md">
                 {errorMessage}
               </div>
-            )}
+            )} */}
             {/* </div> */}
           </div>
 
@@ -154,6 +154,7 @@ const Game = () => {
                   handleLoginData({ username, password })
                 }
                 loginMessage={loginMessage}
+                // errorMessage={errorMessage}
               />
             )}
 
@@ -166,6 +167,11 @@ const Game = () => {
             {party && (
               <div className="text-base font-medium text-white bg-purple-600 px-6 py-3 rounded-lg shadow-md backdrop-blur-sm  border border-white/20">
                 {`You are ${party.toUpperCase()}'s now`}
+              </div>
+            )}
+            {errorMessage && (
+              <div className=" bg-red-600 text-white text-sm sm:text-base border-2 border-red-700 p-3 rounded shadow-md">
+                {errorMessage}
               </div>
             )}
           </div>

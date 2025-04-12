@@ -6,6 +6,7 @@ const Login = ({
   handleLoginData,
   loginMessage,
   userLogged,
+  // errorMessage,
 }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -75,7 +76,11 @@ const Login = ({
             {loginMessage}
           </div>
         )}
-
+        {/* {errorMessage && (
+          <div className=" bg-red-600 text-white text-sm sm:text-base border-2 border-red-700 p-3 rounded shadow-md">
+            {errorMessage}
+          </div>
+        )} */}
         {loginStatus && (
           <div className="text-center mt-4 text-md text-green-400 font-semibold">
             Welcome {userLogged}!

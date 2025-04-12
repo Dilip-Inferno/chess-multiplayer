@@ -74,11 +74,11 @@ const ChessBoard = ({ board, socket, onPieceMove, party, errorMessage }) => {
         </div>
 
         {/* Error Message */}
-        {errorMessage && (
+        {/* {errorMessage && (
           <div className="mt-4 bg-red-600/80 text-white w-full text-center text-sm sm:text-base border border-red-700 rounded shadow-md p-3 backdrop-blur-sm ">
             {errorMessage}
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
